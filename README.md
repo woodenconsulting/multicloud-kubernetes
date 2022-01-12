@@ -33,6 +33,8 @@ Kubernetes multicloud deployment example using Terraform
 
 # Configure kubectl
 
+- Backup your existing kube config so you don't have to worry about removing clusters, users and contexts
+  `cp ~/.kube/config ~/.kube/config_backup`
 - Navigate to the `eks` directory
 - Add the `demo-eks` context to your `~/.kube/config` file with the following command
   aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name) --alias demo-eks
@@ -67,7 +69,11 @@ Kubernetes multicloud deployment example using Terraform
 
 # Cleanup application and resources
 
-- For each of our terraform directories (`eks`, `aks`, `consul` & `counting-service`), run the `terraform destroy` command
+- For each of the following directories run the `terraform destroy` command in the specified order:
+  - `counting-service`
+  - `consul`
+  - `aks`
+  - `eks`
 
 # Learning Resources
 - https://learn.hashicorp.com/collections/terraform/kubernetes
