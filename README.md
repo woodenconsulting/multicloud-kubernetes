@@ -16,7 +16,6 @@ Kubernetes multicloud deployment example using Terraform
 - Login to Azure with `az login`
 - Create active directory service account with `az ad sp create-for-rbac --skip-assignment`
 - Rename `terraform.tfvars.example` to `terraform.tfvars` and replace appId and password using service account credentials
-- Comment out the `proxy_defaults.tf` file or remove the `tf` extension so that Terraform does not use this on the initial apply. We'll need to make sure that main.tf is applied first.
 - Run `terraform init` to initialize the directory and download the necessary providers
 - Run `terraform plan` to review the provisioning plan
 - Run `terraform apply` to provision the configured resources
@@ -24,6 +23,7 @@ Kubernetes multicloud deployment example using Terraform
 # Consul
 
 - Navigate to the `consul` directory
+- Comment out the `proxy_defaults.tf` file or remove the `tf` extension so that Terraform does not use this on the initial apply. We'll need to make sure that main.tf is applied first.
 - Run `terraform init` to initialize the directory and download the necessary providers
 - Run `terraform plan` to review the provisioning plan
 - Run `terraform apply` to provision the configured resources
@@ -44,12 +44,12 @@ Kubernetes multicloud deployment example using Terraform
 
 # Validate cluster federation
 - Verify EKS consul deployments
-  `kubectl get pods --context demo-eks`
+  `kubectl --context demo-eks get pods`
 - Verify AKS consul deployments
-  `kubectl get pods --context demo-aks`
+  `kubectl --context demo-aks get pods`
 - Verify proxy defaults
-  `kubectl get proxydefaults --context demo-eks`
-  `kubectl get proxydefaults --context demo-aks`
+  `kubectl --context demo-eks get proxydefaults`
+  `kubectl --context demo-aks get proxydefaults`
 - Verify cluster federation of dc1 and dc2
   `kubectl exec statefulset/consul-server --context demo-aks -- consul members -wan`
 
